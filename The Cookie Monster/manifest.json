@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Cookie Monster",
+  "description": "Automatically rejects cookies on websites.",
+  "version": "1.0",
+  "permissions": [
+    "activeTab"
+  ],  // Added comma here
+  "host_permissions": [
+    "<all_urls>"
+  ],  // Added comma here
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
