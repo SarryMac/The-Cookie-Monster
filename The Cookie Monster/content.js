@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const wordsToLookOutFor = [
-    'consent', 'cookie', 'privacy'
+    'consent', 'cookie', 'privacy', 'test'
 ]
 
 function removeCookieConsentDialog() {
