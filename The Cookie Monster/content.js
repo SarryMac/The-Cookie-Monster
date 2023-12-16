@@ -1,45 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Content script active");
-    // Here you can later add code to interact with web pages
-const dialog = findCookieConsentDialog();
-if (dialog) {
-    rejectCookies(dialog);
-} else {
-    console.log('No cookie consent dialog found');
-}});
+    // Here you can later add code to interact with web pages  
+});
 
 function findCookieConsentDialog(node = document) {
-    let pepsiConsentDiv = node.querySelector('#teconsent');
-    if (pepsiConsentDiv) {
-        return pepsiConsentDiv;
-    }
+    const rejectButton=document.getElementById("consent_blackbar");
+    console.log(rejectButton);
+    if(rejectButton){
+        rejectButton.remove();
+    }    
 
-    // Your existing general selectors
-    const selectors = ['cookie-consent', 'cookieBanner', 'cookie-notice'];
-    for (let selector of selectors) {
-        let dialog = node.querySelector(`[id*=${selector}], [class*=${selector}]`);
-        if (dialog) {
-            return dialog;
-        }
-    }
-    return null;
+    document.getElementById("teconsent").remove()
+    
 }
+findCookieConsentDialog()
 
-function rejectCookies(dialog) {
-    // Logic to 'click' the reject button in the dialog
-    // This is highly dependent on the structure of the dialog
-    const rejectButton = dialog.querySelector('button[title*="reject"], button[title*="decline"]');
-    if (rejectButton) {
-        rejectButton.click();
-        console.log('Cookie consent rejected');
-    }
-}
-
-// Function to handle mutations (changes) observed
 function handleMutations(mutations, observer) {
     for (let mutation of mutations) {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-            // Check each added node if it is the cookie dialog
             mutation.addedNodes.forEach(node => {
                 if (node.nodeType === Node.ELEMENT_NODE) { // Make sure it's an element node
                     const dialog = findCookieConsentDialog(node);
