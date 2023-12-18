@@ -1,4 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
+const checkForElement = setInterval(() => {
+    const diddelete=removeCookieConsentDialog()
+    if (diddelete==true) { //would work without ""==true" as if gate only activated if the outcome is true
+      console.log("stopping interval");
+      clearInterval(checkForElement);
+      // Run your code for the element here
+    }
+  }, 100); // Check every 100ms, adjust as necessary
+  
+  window.addEventListener('load', function() { 
+    // window. wonrked in the above line. Document. did not
     console.log("Content script active");
     // Here you can later add code to interact with web pages  
 });
@@ -10,7 +20,7 @@ const wordsToLookOutFor = [
 function removeCookieConsentDialog() {
     const idsOnPage = getAllIdsOnDOM();
     console.log(idsOnPage);
-
+    var diddelete=false
     idsOnPage.forEach(idString => {
         if(idString === 'truste-consent-text'){
             console.log('truste-consent-text')
@@ -23,10 +33,11 @@ function removeCookieConsentDialog() {
             if(idStringLower.includes(currentReferenceWord)){
                 console.log(idStringLower, currentReferenceWord);
                 deleteElement(idString);
+                diddelete=true
             }
         }
     })
-    
+    return diddelete
 }
 
 const varWillNeverChange = 1;
@@ -50,31 +61,7 @@ function deleteElement(idStringToDelete){
         elementToDelete.remove();
     }
 }
-removeCookieConsentDialog()
 
 
 
-// function handleMutations(mutations, observer) {
-//     for (let mutation of mutations) {
-//         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-//             mutation.addedNodes.forEach(node => {
-//                 if (node.nodeType === Node.ELEMENT_NODE) { // Make sure it's an element node
-//                     const dialog = findCookieConsentDialog(node);
-//                     if (dialog) {
-//                         rejectCookies(dialog);
-//                         observer.disconnect(); // Optional: disconnect the observer after finding the dialog
-//                     }
-//                 }
-//             });
-//         }
-//     }
-// }
 
-// // Create a new MutationObserver instance
-// const observer = new MutationObserver(handleMutations);
-
-// // Options for the observer (what changes to observe)
-// const config = { childList: true, subtree: true };
-
-// // Start observing the document body for DOM changes
-// observer.observe(document.body, config);

@@ -16,6 +16,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "run_at": "document_start", //the content starts to load as you as you click onto the website. Instead of when the website finishes loading
       "js": ["content.js"]
     }
   ]
