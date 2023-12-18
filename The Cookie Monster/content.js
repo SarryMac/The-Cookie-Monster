@@ -10,7 +10,7 @@ const checkForElement = setInterval(() => {
   window.addEventListener('load', function() { 
     // window. wonrked in the above line. Document. did not
     console.log("Content script active");
-    // Here you can later add code to interact with web pages  
+    removeCookieConsentDialog()
 });
 
 const wordsToLookOutFor = [
